@@ -14,6 +14,7 @@ For details of the algorithm, please refer to our paper.
 ├── plot_query-comp_beta_effect.py   # Plot script analyzing the effect of β (for Fig.S2)
 ├── plot_QSP-error.py                # Plot script for visualizing β vs L (for Fig.S3)
 ├── plot_T-L.py                      # Plot script for T-L curve (for Fig.S4)
+├── requirements.txt                 # List of Python packages used in this repository
 ├── LICENSE.md                       # BSD 3-Clause Clear License (project-wide)
 ├── README.md                        # Project documentation (this file)
 │
@@ -37,8 +38,8 @@ For details of the algorithm, please refer to our paper.
 
 To reproduce the numerical results in the paper:
 
-1. **Install required packages**:  
-    See the environment instructions in `requirements.txt`.
+1. **Install required Python packages**:  
+    See the Python environment instructions in `requirements.txt`.
 
 2. **Run numerical calculations**:  
    - `calculate_pae_query-comp.py`: Generates query complexity data.
