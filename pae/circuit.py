@@ -27,17 +27,17 @@ def make_Ua_ry_qc(n_qubit: int, ry_angle: float):
 
 
 def make_V_phi_qc(angle_list: list, Ua_qc: QuantumCircuit):
-    """Make operator V_ph from Grover operator with QSP.
+    """Make operator V_phi from Grover operator with QSP.
 
     Args:
         angle_list (list): angle sequence
         Ua_qc (QuantumCircuit): operator Ua
 
     Returns:
-        QuantumCircuit: operator V_ph
+        QuantumCircuit: operator V_phi
     """
     n_qubit = Ua_qc.num_qubits
-    V_phi_qc = QuantumCircuit(n_qubit + 1, name="V_ph", global_phase=0)
+    V_phi_qc = QuantumCircuit(n_qubit + 1, name="V_phi", global_phase=0)
     V_phi_qc_qubit_list = [i for i in range(n_qubit + 1)]
 
     angle_list_new = []
@@ -51,7 +51,6 @@ def make_V_phi_qc(angle_list: list, Ua_qc: QuantumCircuit):
 
     # print("angle_list     : ", angle_list)
     # print("angle_list_new : ", angle_list_new)
-
     for ang_index in range(len(angle_list)-1):
         if ang_index == 0:
             V_phi_qc.rx(float(angle_list_new[2*ang_index]) * -2, 0)
@@ -72,6 +71,25 @@ def make_V_phi_qc(angle_list: list, Ua_qc: QuantumCircuit):
             V_phi_qc.x(V_phi_qc_qubit_list[1:n_qubit + 1])
 
             V_phi_qc.rx(float(angle_list_new[2*ang_index + 1]) * -2, 0)
+        elif ang_index == len(angle_list)-2: 
+            V_phi_qc.rx(float(angle_list_new[2*ang_index] + math.pi/2) * -2, 0)
+
+            # controlled inverse Grover operator
+            # operator U0
+            V_phi_qc.x(V_phi_qc_qubit_list[1:n_qubit + 1])
+            V_phi_qc.h(n_qubit)
+            V_phi_qc.append(MCXGate(n_qubit), V_phi_qc_qubit_list)
+            V_phi_qc.h(n_qubit)
+            V_phi_qc.x(V_phi_qc_qubit_list[1:n_qubit + 1])
+            # operator Ua
+            V_phi_qc.append(Ua_qc, V_phi_qc_qubit_list[1:n_qubit + 1])
+            # operator Uf
+            V_phi_qc.cz(0, n_qubit)
+            # operator Ua†
+            V_phi_qc.append(Ua_qc.inverse(), V_phi_qc_qubit_list[1:n_qubit + 1])
+
+            V_phi_qc.rz(-math.pi / 2, 0)
+            V_phi_qc.rx(float(angle_list_new[2*ang_index + 1] - math.pi/2) * -2, 0)
         elif ang_index % 2 == 0:  # W_φ
             V_phi_qc.rx(float(angle_list_new[2*ang_index]) * -2, 0)
             V_phi_qc.rz(math.pi / 2, 0)
