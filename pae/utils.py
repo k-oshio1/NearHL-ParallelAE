@@ -61,5 +61,5 @@ def calc_oracle_calls(K: int, shots_list: list, n_multiple_list: list, degree_L_
         Nk = shots_list[k]
         mk = n_multiple_list[k]
         # NOTE: W_Q contains 1 oracle
-        n_orac += Nk * mk * (degree_L_X_list[k] + degree_L_Y_list[k])
+        n_orac += Nk * mk * (degree_L_X_list[k] + degree_L_Y_list[k] + 2)
     return n_orac
