@@ -12,14 +12,14 @@ from pae.utils import sampling_circuit, process_result, calc_oracle_calls
 if __name__ == '__main__':
     # set parameters
     n_qubit = 2
-    ry_angle = 1 / 4 * math.pi  # a = sin^2(θ/2)
+    ry_angle = 0 #1 / 4 * math.pi  # a = sin^2(θ/2)
     K = 9  # 2**(K-1) is maximum number of multiples
     n_trial = 100
     n_parallel_list = [2**k for k in range(K)]
     n_series_list = [1 for _ in range(K)]
     gamma = 4.0835  # parameter derived in Belliardo2020
     nu_K_list = [7.0, 18.0]  # parameter derived in Belliardo2020
-    degree_L_X_list = [10, 12, 12, 14, 16, 18, 20, 20, 22] # determined from the preliminary experiment
+    degree_L_X_list = [10, 12, 12, 16, 16, 18, 20, 20, 22] # determined from the preliminary experiment
     degree_L_Y_list = [12, 14, 14, 14, 16, 18, 20, 20, 22] # determined from the preliminary experiment
 
     # set Qiskit simulator
